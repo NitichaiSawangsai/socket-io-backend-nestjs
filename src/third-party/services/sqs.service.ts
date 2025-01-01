@@ -28,7 +28,7 @@ export default class SQSService {
 
   async sendMessage() {
     const message = {
-      something: 'here',
+      something: 'here1233 aom',
     };
 
     const params = {

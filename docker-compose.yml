@@ -24,32 +24,32 @@ services:
         reservations:
           cpus: '0.25'
           memory: 10M
-  localstack-sqs:
-    container_name: localstack-sqs
-    image: localstack/localstack:2.0
-    platform: linux/amd64
-    restart: always
-    networks:
-      - scg_network
-    env_file:
-      - .env
-    environment:
-      AWS_DEFAULT_REGION: ${SQS_REGION}
-      EDGE_PORT: 4566
-      SERVICES: sqs
-      DEBUG: 1
-      DATA_DIR: /tmp/localstack/data
-    ports:
-      - 4566:4566
-    volumes:
-      - 'localstack-data:/tmp/localstack'
-      - '/var/run/docker.sock:/var/run/docker.sock'
+  # localstack-sqs:
+  #   container_name: localstack-sqs
+  #   image: localstack/localstack:2.0
+  #   platform: linux/amd64
+  #   restart: always
+  #   networks:
+  #     - scg_network
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     AWS_DEFAULT_REGION: ${SQS_REGION}
+  #     EDGE_PORT: 4566
+  #     SERVICES: sqs
+  #     DEBUG: 1
+  #     DATA_DIR: /tmp/localstack/data
+  #   ports:
+  #     - 4566:4566
+  #   volumes:
+  #     - 'localstack-data:/tmp/localstack'
+  #     - '/var/run/docker.sock:/var/run/docker.sock'
 
 networks:
   scg_network:
 
 volumes:
   postgres-data:
-  localstack-data:
+  # localstack-data:
   cache:
     driver: local
