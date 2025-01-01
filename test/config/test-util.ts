@@ -36,13 +36,6 @@ export class TestUtil {
     providers = [],
     exports = [],
   }: ModuleMetadata): TestingModuleBuilder {
-    process.env = {
-      SERVER_PORT: '3001',
-      NODE_ENV: 'development',
-      SECRET_KEY_EMAIL: '12345',
-      COGNITO_DOMAIN: 'https://xxx.auth.ap-southeast-1.amazoncognito.com',
-    };
-
     return Test.createTestingModule({
       imports: [DatabaseTest, AuthModule, ...imports, HttpModule, LoggerModule],
       controllers,

@@ -1,6 +1,7 @@
 import type { Config } from '@jest/types';
 
 export default {
+  setupFiles: ['./test/config/env.setup.ts'],
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: '.',
   testRegex: '.*\\.(spec|e2e-spec)\\.ts$',

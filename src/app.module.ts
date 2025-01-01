@@ -2,6 +2,7 @@ import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CallSummarizationModule } from './call-summarization/call-summarization.module';
 import serverConfig from './config/server.config';
+import awsConfig from './config/aws.config';
 import * as Joi from 'joi';
 import { HealthModule } from './health/health.module';
 import { LoggerModule } from './logger/logger.module';
@@ -9,11 +10,11 @@ import { LoggerModule } from './logger/logger.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [serverConfig],
+      load: [serverConfig, awsConfig],
       cache: true,
       validationSchema: Joi.object({
-        SERVER_PORT: Joi.number().port().label('port server').required(),
         NODE_ENV: Joi.string().label('nodeENV server').required(),
+        SERVER_PORT: Joi.number().port().label('port server').required(),
         SECRET_KEY_EMAIL: Joi.string()
           .label('secretKeyEmail server')
           .required(),
