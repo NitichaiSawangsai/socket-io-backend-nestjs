@@ -1,0 +1,17 @@
+name: Secret Detection Workflow
+on:
+  pull_request:
+    branches:
+      - master
+      - develop
+
+
+jobs:
+  secret-detection:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+        - name: Checkout Repo
+          uses: actions/checkout@v3
+        - name: Detect Secret Scanner
+          uses: kmnpat/detect-secrets-selfhosted@1.4.0

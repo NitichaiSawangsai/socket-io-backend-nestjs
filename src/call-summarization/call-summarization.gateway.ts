@@ -28,7 +28,7 @@ export class CallSummarizationGeteway extends BaseGateway {
   ) {
     this.io.to(client.id).emit('send_data', {
       status: 200,
-      data
+      data,
     });
   }
 }

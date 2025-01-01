@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="/Users/nitichaisawangsai_company/Desktop/company/scg/ncc/socket-backend .tmp/test/app.e2e-spec.ts">
+    <testCase name="AppController (e2e) should be defined" duration="110"/>
+  </file>
+</testExecutions>

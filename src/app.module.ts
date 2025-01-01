@@ -1,10 +1,9 @@
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { CallSummarizationModule } from './call-summarization/call-summarization.module';
 import serverConfig from './config/server.config';
 import * as Joi from 'joi';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -14,13 +13,14 @@ import * as Joi from 'joi';
       validationSchema: Joi.object({
         SERVER_PORT: Joi.number().port().label('port server').required(),
         NODE_ENV: Joi.string().label('nodeENV server').required(),
-        SECRET_KEY_EMAIL: Joi.string().label('secretKeyEmail server').required(),
+        SECRET_KEY_EMAIL: Joi.string()
+          .label('secretKeyEmail server')
+          .required(),
       }),
     }),
+    HealthModule,
     CallSummarizationModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

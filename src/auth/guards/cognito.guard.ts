@@ -12,7 +12,7 @@ export class CognitoAuthGuard implements CanActivate {
     const client: SocketWithAuth = context.switchToWs().getClient();
 
     const accessToken = client?.handshake?.headers?.token;
-    console.log('WsGuard ++++ ', accessToken);
+    console.info('WsGuard ++++ ', accessToken);
 
     try {
       // client.userID = 'aaa';

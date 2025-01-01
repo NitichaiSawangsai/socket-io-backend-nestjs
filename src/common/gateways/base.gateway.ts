@@ -25,7 +25,7 @@ export class BaseGateway
   }
 
   onModuleInit() {
-    this.io.on('connection', (socket) => {
+    this.io.on('connection', () => {
       this.logger.log(`socket connection`);
     });
   }
@@ -55,6 +55,7 @@ export class BaseGateway
       this.io.to(client.id).emit('status_connection', {
         socketsId: roomName,
         status: 500,
+        error,
       });
     }
   }
@@ -80,6 +81,7 @@ export class BaseGateway
       this.io.emit('status_connection', {
         socketsId: roomName,
         status: 500,
+        error,
       });
     }
   }

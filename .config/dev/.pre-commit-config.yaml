@@ -1,0 +1,13 @@
+repos:
+  - repo: https://github.com/NASA-AMMOS/slim-detect-secrets
+    # using commit id for now, will change to tag when official version is released
+    rev: 62a56fb6f51b840bbd7bfa8bc5ae96dfe4fdfa01
+    hooks:
+      - id: detect-secrets
+        args:
+          - '--baseline'
+          - '.secrets.baseline'
+          - '--exclude-files'
+          - '.git*'
+          - '--exclude-files'
+          - '.pre-*'
