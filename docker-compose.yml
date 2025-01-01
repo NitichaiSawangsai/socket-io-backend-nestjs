@@ -24,6 +24,17 @@ services:
         reservations:
           cpus: '0.25'
           memory: 10M
+  alpine-sqs:
+    image: roribio16/alpine-sqs:latest
+    container_name: alpine-sqs
+    platform: linux/amd64
+    ports:
+      - "9324:9324"
+      - "9325:9325"
+    volumes:
+      - ./.config/sqs/sqs-insight.conf:/opt/sqs-insight.conf
+      - ./.config/sqs/elasticmq.conf:/opt/elasticmq.conf 
+    restart: always
 
 networks:
   scg_network:

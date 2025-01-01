@@ -61,7 +61,6 @@ import { LoggingInterceptor } from './common/interceptor/logging.interceptor';
         },
       }),
     }),
-
     LoggerModule,
     HealthModule,
     CallSummarizationModule,
