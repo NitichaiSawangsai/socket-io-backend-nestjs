@@ -24,22 +24,32 @@ services:
         reservations:
           cpus: '0.25'
           memory: 10M
-  alpine-sqs:
-    image: roribio16/alpine-sqs:latest
-    container_name: alpine-sqs
+  localstack-sqs:
+    container_name: localstack-sqs
+    image: localstack/localstack:2.0
     platform: linux/amd64
-    ports:
-      - "9324:9324"
-      - "9325:9325"
-    volumes:
-      - ./.config/sqs/sqs-insight.conf:/opt/sqs-insight.conf
-      - ./.config/sqs/elasticmq.conf:/etc/elasticmq/elasticmq.conf
     restart: always
+    networks:
+      - scg_network
+    env_file:
+      - .env
+    environment:
+      AWS_DEFAULT_REGION: ${SQS_REGION}
+      EDGE_PORT: 4566
+      SERVICES: sqs
+      DEBUG: 1
+      DATA_DIR: /tmp/localstack/data
+    ports:
+      - 4566:4566
+    volumes:
+      - 'localstack-data:/tmp/localstack'
+      - '/var/run/docker.sock:/var/run/docker.sock'
 
 networks:
   scg_network:
 
 volumes:
   postgres-data:
+  localstack-data:
   cache:
     driver: local
