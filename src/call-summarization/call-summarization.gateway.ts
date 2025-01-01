@@ -9,6 +9,7 @@ import {
 import { CognitoAuthGuard } from '../auth/guards/cognito.guard';
 import { SocketWithAuth } from '../common/types/auth';
 import { BaseGateway } from '../common/gateways/base.gateway';
+import SQSService from '../third-party/services/sqs.service';
 
 @ApiBearerAuth()
 @UseGuards(CognitoAuthGuard)
@@ -17,15 +18,16 @@ import { BaseGateway } from '../common/gateways/base.gateway';
   namespace: 'call-summarization',
 })
 export class CallSummarizationGeteway extends BaseGateway {
-  constructor() {
+  constructor(private readonly sqsService: SQSService) {
     super(CallSummarizationGeteway.name);
   }
 
   @SubscribeMessage('newMessage')
-  onNewMessage(
+  async onNewMessage(
     @MessageBody() data: any,
     @ConnectedSocket() client: SocketWithAuth,
   ) {
+    await this.sqsService.sendMessage();
     this.io.to(client.id).emit('send_data', {
       status: 200,
       data,

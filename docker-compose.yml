@@ -33,7 +33,7 @@ services:
       - "9325:9325"
     volumes:
       - ./.config/sqs/sqs-insight.conf:/opt/sqs-insight.conf
-      - ./.config/sqs/elasticmq.conf:/opt/elasticmq.conf 
+      - ./.config/sqs/elasticmq.conf:/etc/elasticmq/elasticmq.conf
     restart: always
 
 networks:
