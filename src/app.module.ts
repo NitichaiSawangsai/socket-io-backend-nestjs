@@ -4,6 +4,7 @@ import { CallSummarizationModule } from './call-summarization/call-summarization
 import serverConfig from './config/server.config';
 import * as Joi from 'joi';
 import { HealthModule } from './health/health.module';
+import { LoggerModule } from './logger/logger.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { HealthModule } from './health/health.module';
           .required(),
       }),
     }),
+    LoggerModule,
     HealthModule,
     CallSummarizationModule,
   ],
