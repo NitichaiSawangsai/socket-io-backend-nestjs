@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CallSummarizationGeteway } from './call-summarization.geteway';
+import { CallSummarizationGeteway } from './call-summarization.gateway';
 
 @Module({
   imports: [],

@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { SocketIOAdapter } from './socket-io-adapter';
-import { ConfigService, ConfigType } from '@nestjs/config';
+import { ConfigType } from '@nestjs/config';
 import helmet from 'helmet';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import serverConfig from './config/server.config';
@@ -28,9 +27,6 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
   fs.writeFileSync('swagger.json', JSON.stringify(document));
   // app.useLogger(app.get<WinstonLoggerService>(LOGGER_SERVICE));
-
-  const configService = app.get(ConfigService);
-  app.useWebSocketAdapter(new SocketIOAdapter(app, configService));
 
   await app.listen(svConfig.port);
 }

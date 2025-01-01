@@ -3,9 +3,9 @@ import { Socket } from 'socket.io';
 
 // guard types
 export type AuthPayload = {
-  userID: string;
-  pollID: string;
-  name: string;
+  userId: string;
+  roleId: string;
+  email: string;
 };
 
 export type RequestWithAuth = Request & AuthPayload;

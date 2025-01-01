@@ -1,18 +1,42 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CallSummarizationModule } from './call-summarization/call-summarization.module';
 import serverConfig from './config/server.config';
+import * as Joi from 'joi';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       load: [serverConfig],
+      cache: true,
+      validationSchema: Joi.object({
+        SERVER_PORT: Joi.number().port().label('port server').required(),
+        NODE_ENV: Joi.string().label('nodeENV server').required(),
+        SECRET_KEY_EMAIL: Joi.string().label('secretKeyEmail server').required(),
+      }),
     }),
     CallSummarizationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply((_req, response, next) => {
+        response.setHeader('X-XSS-Protection', '1; mode=block');
+        response.setHeader('X-Content-Type-Options', 'nosniff');
+        response.setHeader('X-Frame-Options', 'DENY');
+        response.setHeader('Content-Security-Policy', "default-src 'self'");
+        response.setHeader(
+          'Strict-Transport-Security',
+          'max-age=15552000; includeSubDomains',
+        );
+        // response.setHeader('Referrer-Policy', 'no-referrer');
+        next();
+      })
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}
