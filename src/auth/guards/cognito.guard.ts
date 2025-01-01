@@ -3,30 +3,21 @@ import {
   CanActivate,
   ExecutionContext,
   ForbiddenException,
-  Logger,
 } from '@nestjs/common';
-import { RequestWithAuth } from '../../common/types/auth';
+import { SocketWithAuth } from '../../common/types/auth';
 
 @Injectable()
 export class CognitoAuthGuard implements CanActivate {
-  // private readonly logger = new Logger(CognitoAuthGuard.name);
-  constructor() {}
-
   canActivate(context: ExecutionContext): boolean | Promise<boolean> {
-    const request: RequestWithAuth = context.switchToHttp().getRequest();
+    const client: SocketWithAuth = context.switchToWs().getClient();
 
-    console.log('request ', request)
-
-    // this.logger.debug(`Checking for auth token on request body`, request.body);
-
-    const { accessToken } = request.body;
+    const accessToken = client?.handshake?.headers?.token;
+    console.log('WsGuard ++++ ', accessToken);
 
     try {
-      // const payload = this.jwtService.verify(accessToken);
-      // // append user and poll to socket
-      // request.userID = payload.sub;
-      // request.pollID = payload.pollID;
-      // request.name = payload.name;
+      // client.userID = 'aaa';
+      // client.pollID = 'ddff';
+      // client.name = 'dddff';
       return true;
     } catch {
       throw new ForbiddenException('Invalid authorization token');

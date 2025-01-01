@@ -14,31 +14,24 @@ export class SocketIOAdapter extends IoAdapter {
   }
 
   createIOServer(port: number, options?: ServerOptions) {
-    // const clientPort = parseInt(this.configService.get('CLIENT_PORT'));
+    const corsOptions = {
+      origin: [],
+    };
 
-    // const cors = {
-    //   origin: [
-    //     `http://localhost:${clientPort}`,
-    //     new RegExp(`/^http:\/\/192\.168\.1\.([1-9]|[1-9]\d):${clientPort}$/`),
-    //   ],
-    // };
-
-    // this.logger.log('Configuring SocketIO server with custom CORS options', {
-    //   cors,
-    // });
+    this.logger.log('Configuring SocketIO server with custom CORS options', {
+      corsOptions,
+    });
 
     const optionsWithCORS: ServerOptions = {
       ...options,
-      // cors,
+      // cors: corsOptions,
     };
 
-    console.log('port ', port)
+    const server: Server = super.createIOServer(port, optionsWithCORS);
 
-    // const server: Server = super.createIOServer(port, optionsWithCORS);
+    server.of('polls').use(createTokenMiddleware(this.logger));
 
-    // server.of('polls').use(createTokenMiddleware(this.logger));
-
-    // return server;
+    return server;
   }
 }
 

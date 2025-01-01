@@ -15,8 +15,6 @@ import { CognitoAuthGuard } from '../auth/guards/cognito.guard';
 
 @ApiBearerAuth()
 @UseGuards(CognitoAuthGuard)
-// @SetMetadata('roles', RoleDashboard)
-// @Controller('/test/avaya/api/v1/csat')
 @ApiTags('CallSummarization')
 @WebSocketGateway({
   namespace: 'call-summarization',
@@ -43,30 +41,24 @@ export class CallSummarizationGeteway
   }
 
   async handleConnection(client: any) {
-    // console.log('handleConnection ++++');
-    // const sockets = this.io.sockets;
-
-    // this.logger.debug(
-    //   `Socket connected with userID: ${client.userID}, pollID: ${client.pollID}, and name: "${client.name}"`,
-    // );
-
-    // this.logger.log(`WS Client with id: ${client.id} connected!`);
-    // this.logger.debug(`Number of connected sockets: ${sockets.size}`);
-
-    // const roomName = client.pollID;
-    // await client.join(roomName);
-
-    // const connectedClients = this.io.adapter.rooms?.get(roomName)?.size ?? 0;
-
-    // this.logger.debug(
-    //   `userID: ${client.userID} joined room with name: ${roomName}`,
-    // );
-    // this.logger.debug(
-    //   `Total clients connected to room '${roomName}': ${connectedClients}`,
-    // );
-
-    // console.log('client ', client);
-    // this.io.to(roomName).emit('poll_updated', 'AOM22233');
+    console.log('handleConnection ++++');
+    const sockets = this.io.sockets;
+    this.logger.debug(
+      `Socket connected with userID: ${client.userID}, pollID: ${client.pollID}, and name: "${client.name}"`,
+    );
+    this.logger.log(`WS Client with id: ${client.id} connected!`);
+    this.logger.debug(`Number of connected sockets: ${sockets.size}`);
+    const roomName = client.pollID;
+    await client.join(roomName);
+    const connectedClients = this.io.adapter.rooms?.get(roomName)?.size ?? 0;
+    this.logger.debug(
+      `userID: ${client.userID} joined room with name: ${roomName}`,
+    );
+    this.logger.debug(
+      `Total clients connected to room '${roomName}': ${connectedClients}`,
+    );
+    console.log('client ', client);
+    this.io.to(roomName).emit('poll_updated', 'AOM22233');
   }
 
   @SubscribeMessage('newMessage')
