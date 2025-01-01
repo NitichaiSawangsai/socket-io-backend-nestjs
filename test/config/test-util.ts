@@ -1,6 +1,5 @@
 import { LoggerService, ModuleMetadata } from '@nestjs/common';
 import { Test, TestingModuleBuilder } from '@nestjs/testing';
-import { DatabaseTest } from './config.test';
 import { HttpModule } from '@nestjs/axios';
 import { LoggerModule } from '../../src/logger/logger.module';
 import { AuthModule } from '../../src/auth/auth.module';
@@ -37,7 +36,7 @@ export class TestUtil {
     exports = [],
   }: ModuleMetadata): TestingModuleBuilder {
     return Test.createTestingModule({
-      imports: [DatabaseTest, AuthModule, ...imports, HttpModule, LoggerModule],
+      imports: [AuthModule, ...imports, HttpModule, LoggerModule],
       controllers,
       providers,
       exports,

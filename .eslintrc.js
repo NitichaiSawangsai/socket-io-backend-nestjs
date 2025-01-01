@@ -23,5 +23,14 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     'no-console': ['error', { allow: ['error', 'info', 'warn'] }],
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        caughtErrors: 'all',
+        caughtErrorsIgnorePattern: '^_',
+      },
+    ],
   },
 };
