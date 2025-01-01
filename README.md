@@ -1,20 +1,20 @@
 ## Installation
-### USE Node >= 18.20 <19 AND Python >=3.11 <3.12
+### USE Node >= 18.20.5 <19 AND Python >=3.11.11 <3.12
 
 ## Install Python
 
-### install python mac 3.11
+### install python mac 3.11.11
 ```bash
 $ brew install pyenv
 $ pyenv install
-$ pyenv global 3.11.0
+$ pyenv global 3.11.11
 $ python -V
-Output: Python 3.11.0
+Output: Python 3.11.11
 $ which python
 Output: /Users/xxxxxxxx/.pyenv/shims/python
 ```
 
-### install python win 3.11
+### install python win 3.11.11
 ```bash
 $ https://www.python.org/downloads/
 ```

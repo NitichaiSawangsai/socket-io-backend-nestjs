@@ -4,7 +4,12 @@
   "description": "",
   "author": "",
   "private": true,
-  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18.20.5 <19",
+    "yarn": ">=1.22.22 <1.23",
+    "python": ">=3.11.11 <3.12",
+    "pip": ">=24.3.1 < 24.4"
+  },
   "scripts": {
     "install": "yarn husky-install && yarn python-install",
     "husky-install": "yarn husky install",
