@@ -48,6 +48,8 @@
     "@nestjs/terminus": "^10.2.3",
     "@nestjs/websockets": "^10.4.15",
     "aws-cloudwatch-log": "^0.1.6",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
     "cross-env": "^7.0.3",
     "detect-secrets": "^1.0.6",
     "dotenv-cli": "^8.0.0",

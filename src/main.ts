@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import serverConfig from './config/server.config';
 import * as fs from 'fs';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -27,6 +28,14 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
   fs.writeFileSync('swagger.json', JSON.stringify(document));
   // app.useLogger(app.get<WinstonLoggerService>(LOGGER_SERVICE));
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true, // Enable automatic transformation
+      whitelist: true, // Automatically remove properties that are not in the DTO class
+      forbidNonWhitelisted: true, // Throw an error if non-whitelisted properties are found
+    }),
+  );
 
   await app.listen(svConfig.port);
 }

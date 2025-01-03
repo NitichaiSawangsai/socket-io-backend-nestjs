@@ -9,7 +9,7 @@ import {
 import { CognitoAuthGuard } from '../auth/guards/cognito.guard';
 import { SocketWithAuth } from '../common/types/auth';
 import { BaseGateway } from '../common/gateways/base.gateway';
-import SQSService from '../third-party/services/sqs.service';
+import CallSummarizationService from './call-summarization.service';
 
 @ApiBearerAuth()
 @UseGuards(CognitoAuthGuard)
@@ -18,19 +18,23 @@ import SQSService from '../third-party/services/sqs.service';
   namespace: 'call-summarization',
 })
 export class CallSummarizationGeteway extends BaseGateway {
-  constructor(private readonly sqsService: SQSService) {
+  constructor(
+    private readonly callSummarizationService: CallSummarizationService,
+  ) {
     super(CallSummarizationGeteway.name);
   }
 
-  @SubscribeMessage('newMessage')
+  @SubscribeMessage('receiveMessageCallSummarization')
   async onNewMessage(
-    @MessageBody() data: any,
+    @MessageBody('phone') phone: string,
     @ConnectedSocket() client: SocketWithAuth,
   ) {
-    await this.sqsService.sendMessage();
+    // const result =
+    //   await this.callSummarizationService.listCallSummarizationByPhone(phone);
+
     this.io.to(client.id).emit('send_data', {
       status: 200,
-      data,
+      // data: result,
     });
   }
 }
